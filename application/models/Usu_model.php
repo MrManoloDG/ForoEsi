@@ -7,24 +7,13 @@ class Usu_model extends CI_Model{
  }
 
  
- //Comprueba si el usuario existe o no
- public function verificar_usuario($user){
- $ssql = "select * from usuario where usuario='".$user."'";
- $consulta = mysql_query($ssql);
- if(mysql_numrows($consulta) == 0){ //el usuario no existe
- return false;
- }else{ //el usuario existe
- return true;
- }
- }
-
 
  //añade un usuario
  public function registrar_usuario(){
   $this->db->insert('usuario', array(
   //el true es para que limpie este campo de inyecciones xss
   'usuario'=>$this->input->post('usuario',TRUE),
-  'password'=>$this->input->post('password',TRUE),
+  'password'=>$this->input->post('pass',TRUE),
   'correo'=>$this->input->post('correo',TRUE),
   'estado'=>'0'
   ));
@@ -45,36 +34,34 @@ class Usu_model extends CI_Model{
  public function cambiar_pass(){
   $oldPass = $this->input->post('password', TRUE);
  	$newPass = $this->input->post('nueva_password', TRUE);
- 	$usuario = $this->input->post('usuario', TRUE);
+ 	$usuario = $this->session->userdata('username');
 
-  $this->db->select('password');
-  $this->db->from('usuario');
-  $this->db->where('usuario',$usuario);
-  $passwordReal = $this->db->get();
-
- 	$data = array(
- 		'usuario' => $usuario,
- 		'password' => $newPass
- 		);
-
-  if($passwordReal==$oldPass)
+  if($this->Usu_model->verificar_usuario($usuario,$oldPass))
   {
- 	  $this->bd->where('usuario',$usuario);
- 	  $this->bd->update('usuario',$data);
+ 	  $this->db->query("update usuario set password ='".$newPass."' where usuario = '".$usuario."'");
     return true;
   }
-  else{return false;}
+  else return false;
  }
+
 
  //cambiar correo
  //devuelve -1 si el correo ya está siendo utilizado por otro usuario
  //devuelve 1 si el correo 
  public function cambiar_correo($usuario,$newCorreo){
+  $enuso = $this->db->query("select id from usuario where correo='".$newCorreo."'");
   $data = array('correo' => $newCorreo);
-  $this->db->where('id', $usuario);
-  $this->db->update('usuario', $data);
-  $error = $this->db->_error_message();
-  if(isset($error)) throw new Exception("Correo ya en uso", 1);
+  $consulta = $enuso->row();
+  if(isset($consulta)){
+    if($enuso->row()->id != $usuario){
+      echo "Correo ya en uso<br>";
+    }
+  }else{
+    $this->db->query("update usuario set correo ='".$newCorreo."' where id='".$usuario."'");
+    echo "Correo cambiado correctamente<br>";
+
+  }
+  
   
  }
 
@@ -96,13 +83,6 @@ class Usu_model extends CI_Model{
   return $num;
  }
  
-
-//Devuelve el numero de usuarios conectados
- public function num_usuarios_conectados(){
-  $query = $this->db->query("select * from usuario where conectado=1");
-  $num = $query->num_rows();
-  return $num;
- }
 
 
 //Quitar un numero determinado de reportes (administrador)
@@ -133,6 +113,58 @@ class Usu_model extends CI_Model{
     return $categ;
  }
 
+
+ public function verify_user($user){
+ $ssql = "select * from usuario where usuario='".$user."'";
+ $consulta = mysql_query($ssql);
+ if(mysql_numrows($consulta) == 0){ //el usuario no existe
+ return false;
+ }else{ //el usuario existe
+ return true;
+ }
+ }
+
+
+  //Comprueba si el usuario existe o no
+ public function verificar_usuario($user, $pass){
+ $ssql = "select * from usuario where usuario='".$user."' and password='".$pass."'";
+ $consulta = mysql_query($ssql);
+ if(mysql_numrows($consulta) == 0){ //el usuario no existe
+ return false;
+ }else{ //el usuario existe
+ return true;
+ }
+ }
+
+ public function banearUsu(){
+  $usuario = $this->input->post('baneado');
+  $query = "select * from usuario where usuario = '".$usuario."'";
+  $consulta = mysql_query($query);
+  if(mysql_numrows($consulta)!=0){
+    $this->db->query("update usuario set reportado=1 where usuario = '".$usuario."'");
+    return true;
+  }
+  else
+    return false;
+}
+
+public function desbanearUsu(){
+  $usuario = $this->input->post('desbaneado');
+  $query = "select * from usuario where usuario = '".$usuario."'";
+  $consulta = mysql_query($query);
+  if(mysql_numrows($consulta)!=0){
+    $this->db->query("update usuario set reportado=0 where usuario = '".$usuario."'");
+    return true;
+  }
+  else
+    return false;
+}
+
+  public function datos_usuarionom($usuario){
+  $data = $this->db->query("Select * from usuario WHERE usuario = '".$usuario."';");
+  
+  return $data->row();
+ }
  public function datos_usuario($id){
   $data = $this->db->query('Select * from usuario WHERE id = '.$id.';');
   return $data->row();
@@ -144,8 +176,7 @@ class Usu_model extends CI_Model{
     $this->db->where('id',$id);
     $this->db->update('usuario',$data);
  }
+
 }
-
-
 
 //

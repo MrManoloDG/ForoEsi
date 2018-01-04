@@ -4,6 +4,7 @@
 	<title><?= $titulo_web ?></title>
 </head>
 <body>
+	<a href="<?= base_url().'index.php/hilos'?>" title="Inicio">  Inicio</a>
 	<h1>Usuario: <?= $usuario->usuario ?></h1>
 	<table>
 		<tr>

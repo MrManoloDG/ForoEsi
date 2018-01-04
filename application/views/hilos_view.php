@@ -4,7 +4,12 @@
 	<title><?= $titulo_web ?></title>
 </head>
 <body>
-	<H1>Usuario : <?= $this->session->userdata('username')?></H1>
+	<H1>Usuario : <a href="<?= base_url().'index.php/Usu/vistaPerfil/'.$this->session->userdata('id') ?>" title="Ver perfil"><?= $this->session->userdata('username')?></a></H1>
+	<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="80" height="80"/><br>
+	<?= $this->session->userdata('estado')?><br>
+	<a href="<?= base_url().'index.php'?>" title="Editar Perfil">  Editar Perfil</a><br>
+	<a href="<?= base_url().'index.php/Usu/logout'?>" title="Deslogearme">  Cerrar sesión</a><br><br>
+
 	<a href="<?= base_url().'index.php/hilos/nuevo' ?>" title="Crear Hilo">Nuevo hilo</a>
 	<table>
 		<tr>
@@ -44,16 +49,13 @@
 			<?php 
 				foreach ($hilos as $hilo) { ?>
 					<td>
-					<a href="<?= base_url().'index.php/hilos/hilo/'.$hilo->id.'/'.$hilo->titulo?>" title="Ver Hilo"><?= $hilo->titulo; ?></a>
+					<a href="<?= base_url().'index.php/respuestas/vistaHilo/'.$hilo->id ?>" title="Ver Hilo"><?= $hilo->titulo; ?></a>
 					</td>
 					<td>
 						<?php 
 							$dusu = $this->Usu_model->nom_usuario($hilo->creador); 
-
-							print($dusu[0]) ;
-							print("<br>");
-
 						?>
+						<a href="<?= base_url().'index.php/Usu/vistaPerfil/'.$hilo->creador ?>" title="Ver perfil"><?= $dusu[0]?></a><br>
 						<img src="<?= base_url().'uploads/'.$dusu[1] ?>" width="80" height="80"/>
 						
 						
