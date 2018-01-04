@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-01-2018 a las 22:12:54
+-- Tiempo de generación: 04-01-2018 a las 23:39:51
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -57,14 +57,16 @@ CREATE TABLE IF NOT EXISTS `hilo` (
   PRIMARY KEY (`id`),
   KEY `creador` (`creador`),
   KEY `categoria` (`categoria`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `hilo`
 --
 
 INSERT INTO `hilo` (`id`, `creador`, `titulo`, `texto`, `fecha`, `categoria`) VALUES
-(1, 1, 'Dani es marica y me tira ficha +TemaSerio', 'sadkaflsdnawiasjjasjcas', '2017-12-19 11:27:53', 1);
+(1, 1, 'Dani es marica y me tira ficha +TemaSerio', 'sadkaflsdnawiasjjasjcas', '2017-12-19 11:27:53', 1),
+(4, 3, 'Titulo', 'asdada', '2018-01-04 23:35:25', 1),
+(5, 3, 'Hola', 'Hola', '2018-01-04 23:36:59', 1);
 
 -- --------------------------------------------------------
 

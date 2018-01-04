@@ -56,7 +56,7 @@
 			</td>
 		</tr>
 	</table>
-	
+	<a href="<?= base_url().'index.php/hilos/hilosUsuario/'.$usuario->id ?>" title="Ver Hilos Usuario">  Ver Hilos de <?= $usuario->usuario ?></a>
 	
 </body>
 </html>

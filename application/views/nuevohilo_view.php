@@ -4,6 +4,8 @@
 	<title><?= $titulo_web ?></title>
 </head>
 <body>
+	<a href="<?= base_url().'index.php/hilos'?>" title="Inicio">  Inicio</a><br>
+	<?= validation_errors(); ?>
 	<table>
 		<tr>
 			<th>Nuevo Hilo</th>
@@ -24,7 +26,7 @@
 		</tr>
 		<tr>
 				<td>Categoria</td>
-				<td><?= form_dropdown('categ',$categorias,'1'); ?></td>
+				<td><?= form_dropdown('categ',$categorias,'0'); ?></td>
 		</tr>
 		<tr>
 			<td>

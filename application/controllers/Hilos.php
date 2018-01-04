@@ -8,8 +8,17 @@ class Hilos extends CI_Controller{
  }
  public function index()
  {
- 	$datos = array('titulo_web' => 'ForoEsi','hilos' => $this->hilos_model->get_titulos(),
- 		'categorias' => $this->categoria_model->get_categoria());
+ 	$opciones = array();
+    $desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+ 
+    $opciones['per_page'] = 15;
+    $opciones['base_url'] = base_url().'index.php/hilos/index';
+    $opciones['total_rows'] = $this->hilos_model->getNumHilos();
+    $opciones['uri_segment'] = 3;
+ 
+    $this->pagination->initialize($opciones);
+ 	$datos = array('titulo_web' => 'ForoEsi','hilos' => $this->hilos_model->get_titulos($opciones['per_page'],$desde),
+ 		'categorias' => $this->categoria_model->get_categoria(),'paginacion' => $this->pagination->create_links());
  	$this->load->view('hilos_view',$datos);
 
  }
@@ -17,11 +26,7 @@ class Hilos extends CI_Controller{
  	$datos = array('titulo_web' => $cat ,'hilos' => $this->hilos_model->get_hilosCat($id));
  	$this->load->view('categoria_view',$datos);
  } 
- public function hilo($id,$tit){
- 	//Cambiar por modelo de hilos vista de dani
- 	$datos = array('titulo_web' => $tit ,'hilos' => $this->hilos_model->get_hilosCat($id));
- 	$this->load->view('hilos_view',$datos);
- }
+ 
  public function buscar(){
  	if($this->input->post('submit')){
 
@@ -30,6 +35,12 @@ class Hilos extends CI_Controller{
  		'categorias' => $this->categoria_model->get_categoria());
  	$this->load->view('hilos_view',$datos);
  	}
+ }
+
+ public function hilosUsuario($id){
+ 	$datos = array('titulo_web' => 'Hilos del usuario' ,'hilos' => $this->hilos_model->get_hilosUser($id),
+ 		'categorias' => $this->categoria_model->get_categoria());
+ 	$this->load->view('hilos_view',$datos);
  }
  public function nuevo(){
  	$cat = $this->categoria_model->get_categoria();
@@ -41,13 +52,21 @@ class Hilos extends CI_Controller{
  		'categorias' => $categ);
  	$this->load->view('nuevohilo_view',$datos);
  }
- public function nausu($id){
- 	
- 	$d = $this->Usu_model->nom_usuario($id);
- 	echo $d->usuario;
- 	//$datos = array('usuario' => $this->Usu_model->nom_usuario($id));
-
- 	//$this->load->view('nausuario_view',$datos);
+ public function nuevoHilo(){
+ 	if($this->input->post('submit')){
+ 		$this->form_validation->set_rules('titulo','Titulo','required|trim');
+		$this->form_validation->set_rules('texto','Texto','required|trim');
+		$this->form_validation->set_rules('categ','Categoria','required|trim');
+		$this->form_validation->set_message('required','El campo %s es obligatorio.');
+		if ($this->form_validation->run() == FALSE){
+			$this->nuevo();
+		}else{
+			$idhilo = $this->hilos_model->add_hilo();
+			$datos = array('titulo_web' => 'Respuestas','respuestas' => $this->respuestas_model->get_respuestas($idhilo));
+ 			$this->load->view('respuestas_view',$datos);
+		}
+	}
  }
+ 
 }
 ?>

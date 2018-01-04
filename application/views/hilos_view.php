@@ -4,6 +4,7 @@
 	<title><?= $titulo_web ?></title>
 </head>
 <body>
+	<?php error_reporting(0); ?>
 	<H1>Usuario : <a href="<?= base_url().'index.php/Usu/vistaPerfil/'.$this->session->userdata('id') ?>" title="Ver perfil"><?= $this->session->userdata('username')?></a></H1>
 	<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="80" height="80"/><br>
 	<?= $this->session->userdata('estado')?><br>
@@ -45,9 +46,10 @@
 			<th>Creador</th>
 			<th>Fecha</th>
 		</tr>
-		<tr>
+		
 			<?php 
 				foreach ($hilos as $hilo) { ?>
+				<tr>
 					<td>
 					<a href="<?= base_url().'index.php/respuestas/vistaHilo/'.$hilo->id ?>" title="Ver Hilo"><?= $hilo->titulo; ?></a>
 					</td>
@@ -63,9 +65,13 @@
 					<td>
 						<?= $hilo->fecha; ?>
 					</td>
+				</tr>
 			<?php	}
 			 ?>
-		</tr>
+		
 	</table>
+	<div class="paginacion">
+		<?php echo $paginacion; ?>
+	</div>
 </body>
 </html>

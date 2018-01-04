@@ -10,12 +10,13 @@ class Hilos_model extends CI_Model{
  	return $consulta->result();
  }
  //Metodo que devuelve los titulos y el usuario ordenados de manera descendiente por la fecha (Timeline)
- public function get_titulos(){
+ public function get_titulos($limit,$start){
+ 	$this->db->limit($limit,$start);
  	$consulta = $this->db->query('Select id,titulo,creador,fecha from hilo ORDER BY fecha DESC;');
  	return $consulta->result();
  }
  public function get_hilosUser($user){
- 	$consulta = $this->db->query('Select id,titulo,creador,fecha from hilo WHERE usuario = '.$user.' ORDER BY fecha DESC;');
+ 	$consulta = $this->db->query('Select id,titulo,creador,fecha from hilo WHERE creador = '.$user.' ORDER BY fecha DESC;');
  	return $consulta->result();
  }
  //Metodo que devuelve hilos en funcion parametro de un titulo
@@ -30,6 +31,12 @@ public function get_hilosCat($cat){
 }
  //Metodo que inserta un articulo en la tabla
  public function add_hilo(){
- 	$this->db->query('Insert into hilo values(null,'.$this->input->post('creador').',\''.$this->input->post('titulo').'\',\''.$this->input->post('texto').'\',null,'.$this->input->post('categoria').')');
+ 	echo ($this->input->post('categ')+1);
+ 	$this->db->query("Insert into hilo values(null,".$this->session->userdata('id').",'".$this->input->post('titulo')."','".$this->input->post('texto')."',null,".($this->input->post('categ')+1).")");
+ 	return $this->db->insert_id();
+ }
+
+ public function getNumHilos(){
+ 	return $this->db->count_all('hilo');
  }
 } 

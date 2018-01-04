@@ -64,9 +64,18 @@ class Usu extends CI_Controller{
         'fechaCreacion' => $d->fechaCreacion
     	);
     	$this->session->set_userdata($newdata);
-    	$datos = array('titulo_web' => 'ForoEsi','hilos' => $this->hilos_model->get_titulos(),
- 		'categorias' => $this->categoria_model->get_categoria());
- 		$this->load->view('hilos_view',$datos);
+    	$opciones = array();
+      $desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+   
+      $opciones['per_page'] = 15;
+      $opciones['base_url'] = base_url().'index.php/hilos/index';
+      $opciones['total_rows'] = $this->hilos_model->getNumHilos();
+      $opciones['uri_segment'] = 3;
+   
+      $this->pagination->initialize($opciones);
+      $datos = array('titulo_web' => 'ForoEsi','hilos' => $this->hilos_model->get_titulos($opciones['per_page'],$desde),
+        'categorias' => $this->categoria_model->get_categoria(),'paginacion' => $this->pagination->create_links());
+      $this->load->view('hilos_view',$datos);
 	}
 	else 
 	{
