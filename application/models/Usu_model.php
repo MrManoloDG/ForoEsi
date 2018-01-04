@@ -133,6 +133,11 @@ class Usu_model extends CI_Model{
     return $categ;
  }
 
+ public function datos_usuario($id){
+  $data = $this->db->query('Select * from usuario WHERE id = '.$id.';');
+  return $data->row();
+ }
+
  public function editarAvatar($id,$imagen){
 
     $data = array('avatar' => $imagen);

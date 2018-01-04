@@ -5,7 +5,7 @@ class respuestas_model extends CI_Model{
  }
  //Metodo que mostrará todos los articulos
  public function get_respuestas($parametro){
- $consulta = $this->db->query('Select * from respuesta where hilo = '$parametro' order by id ASC');
+ $consulta = $this->db->query('Select * from respuesta where hilo = '.$parametro.' order by id ASC');
  return $consulta->result();
  }
  //Metodo que inserta un articulo en la tabla
@@ -13,6 +13,11 @@ class respuestas_model extends CI_Model{
  $this->db->query('Insert into respuestas
 values(null,"'.$this->input->post('hilo').'","'.$this->input->post('usuario
 ').'","'.$this->input->post('texto').'",null)');
+ }
+
+ public function num_mensajes($id){
+ 	$data = $this->db->query('SELECT COUNT( * )  "nmensajes" FROM respuesta WHERE usuario = '.$id.';');
+ 	return $data->row();
  }
 
 }

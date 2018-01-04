@@ -62,6 +62,14 @@ class Usu extends CI_Controller{
  }
 
 
+ public function vistaPerfil($id)
+ {
+ 	$datos = array('titulo_web' => 'ForoEsi','usuario' => $this->Usu_model->datos_usuario($id),
+ 		'nmensajes' => $this->respuestas_model->num_mensajes($id));
+ 	$this->load->view('perfil_view',$datos);
+ }
+
+
 
  
 }
