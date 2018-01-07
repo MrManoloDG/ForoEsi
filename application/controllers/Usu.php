@@ -8,7 +8,7 @@ class Usu extends CI_Controller{
  {
     $this->load->model('Usu_model');
  	  $num=$this->Usu_model->num_usuarios_registrados();
-    $data = array('registrados'=>$num);
+    $data = array('registrados'=>$num,'categoria' => $this->categoria_model->get_categoria());
     if($this->session->userdata('username')=='admin')
       $this->load->view('admin_view',$data);
     else
@@ -27,7 +27,8 @@ class Usu extends CI_Controller{
  }
 
  public function cpass(){
-    $this->load->view('cpass_view');
+    $data = array('categoria' => $this->categoria_model->get_categoria());
+    $this->load->view('cpass_view',$data);
  }
 
  public function cemail(){
@@ -39,7 +40,8 @@ class Usu extends CI_Controller{
  }
 
  public function banear(){
-    $this->load->view('banear_view');
+    $data = array('categoria' => $this->categoria_model->get_categoria());
+    $this->load->view('banear_view',$data);
  }
 
 
@@ -159,10 +161,10 @@ public function cambiar_pass(){
   $this->load->model('Usu_model');
   $variable = $this->Usu_model->cambiar_pass();
   if($variable){
-    $datos = array('mensaje' => 'CONTRASEÑA CAMBIADA CON ÉXITO');
+    $datos = array('mensaje' => 'CONTRASEÑA CAMBIADA CON ÉXITO','categoria' => $this->categoria_model->get_categoria());
     $this->load->view('cpass_view',$datos);
   }else{
-    $datos = array('mensaje' => 'ERROR, EL USUARIO NO EXISTE Y/O LA CONTRASEÑA NO ES VÁLIDA');
+    $datos = array('mensaje' => 'ERROR, EL USUARIO NO EXISTE Y/O LA CONTRASEÑA NO ES VÁLIDA','categoria' => $this->categoria_model->get_categoria());
     $this->load->view('cpass_view',$datos);
   }
 }
@@ -175,25 +177,29 @@ public function banearUsu(){
   $this->load->model('Usu_model');
   $variable = $this->Usu_model->banearUsu();
   if($variable){
-    $datos = array('mensaje' => 'OPERACIÓN REALIZADA CON ÉXITO');
-    $this->load->view('banear_view');
+    $datos = array('mensaje' => 'OPERACIÓN REALIZADA CON ÉXITO','categoria' => $this->categoria_model->get_categoria());
+    $this->load->view('banear_view',$datos);
   }else{
-    $datos = array('mensaje' => 'ERROR, EL USUARIO INTRODUCIDO NO EXISTE');
-    $this->load->view('banear_view');
+    $datos = array('mensaje' => 'ERROR, EL USUARIO INTRODUCIDO NO EXISTE','categoria' => $this->categoria_model->get_categoria());
+    $this->load->view('banear_view',$datos);
   }
 }
 
 public function desbanearUsu(){
   $this->load->model('Usu_model');
   $variable = $this->Usu_model->desbanearUsu();
-  if($variable)
-    $this->load->view('banearOK_view');
-  else
-    $this->load->view('banearFAIL_view');
+  if($variable){
+     $datos = array('mensaje' => 'OPERACIÓN REALIZADA CON ÉXITO','categoria' => $this->categoria_model->get_categoria());
+    $this->load->view('banear_view',$datos);
+  }else{
+    $datos = array('mensaje' => 'ERROR, EL USUARIO INTRODUCIDO NO EXISTE','categoria' => $this->categoria_model->get_categoria());
+    $this->load->view('banear_view',$datos);
+  }
 }
 
 public function editarPerfil(){
-	$this->load->view('editperfil_view');
+  $datos = array('titulo_web' => 'ForoEsi','categoria' => $this->categoria_model->get_categoria());
+	$this->load->view('editperfil_view',$datos);
 }
 
  public function editado(){
@@ -209,7 +215,6 @@ public function editarPerfil(){
     $this->Usu_model->cambiar_estado($this->session->userdata('id'),$estado);
     $this->session->unset_userdata('estado');
     $this->session->set_userdata('estado',$estado);
-    echo "Estado cambiado correctamente<br>";
   }
   if ($correo != '') {
       $this->Usu_model->cambiar_correo($this->session->userdata('id'),$correo);
@@ -218,15 +223,15 @@ public function editarPerfil(){
   }
   if ( ! $this->upload->do_upload('userfile'))
     {
-    $this->load->view('editperfil_view');
+    $data = array('categoria' => $this->categoria_model->get_categoria());
+    $this->load->view('editperfil_view',$data);
     }
     else
     {
-    $data = array('upload_data' => $this->upload->data());
+    $data = array('upload_data' => $this->upload->data(),'categoria' => $this->categoria_model->get_categoria());
     $this->Usu_model->editarAvatar($this->session->userdata('id'),$data['upload_data']['file_name']);
     $this->session->unset_userdata('avatar');
     $this->session->set_userdata('avatar',$data['upload_data']['file_name']);
-    echo "Avatar cambiado satisfactoriamente<br>";
     $this->load->view('editperfil_view', $data);
   }
     
@@ -236,7 +241,7 @@ public function editarPerfil(){
  public function vistaPerfil($id)
  {
   $datos = array('titulo_web' => 'ForoEsi','usuario' => $this->Usu_model->datos_usuario($id),
-    'nmensajes' => $this->respuestas_model->num_mensajes($id));
+    'nmensajes' => $this->respuestas_model->num_mensajes($id),'categoria' => $this->categoria_model->get_categoria());
   $this->load->view('perfil_view',$datos);
  }
 

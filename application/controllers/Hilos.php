@@ -23,7 +23,7 @@ class Hilos extends CI_Controller{
 
  }
  public function categorias($id,$cat){
- 	$datos = array('titulo_web' => $cat ,'hilos' => $this->hilos_model->get_hilosCat($id));
+ 	$datos = array('titulo_web' => $cat ,'hilos' => $this->hilos_model->get_hilosCat($id),'categoria' => $this->categoria_model->get_categoria());
  	$this->load->view('categoria_view',$datos);
  } 
  
@@ -49,7 +49,7 @@ class Hilos extends CI_Controller{
  		array_push($categ, $key->nombre);
  	}
  	$datos = array('titulo_web' => 'Nuevo articulo',
- 		'categorias' => $categ);
+ 		'categorias' => $categ,'categoria' => $this->categoria_model->get_categoria());
  	$this->load->view('nuevohilo_view',$datos);
  }
  public function nuevoHilo(){
@@ -62,7 +62,7 @@ class Hilos extends CI_Controller{
 			$this->nuevo();
 		}else{
 			$idhilo = $this->hilos_model->add_hilo();
-			$datos = array('titulo_web' => 'Respuestas','respuestas' => $this->respuestas_model->get_respuestas($idhilo));
+			$datos = array('titulo_web' => 'Respuestas','respuestas' => $this->respuestas_model->get_respuestas($idhilo),'categorias' => $this->categoria_model->get_categoria(),$this->hilos_model,'id' => $idhilo);
  			$this->load->view('respuestas_view',$datos);
 		}
 	}

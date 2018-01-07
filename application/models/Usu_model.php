@@ -54,12 +54,9 @@ class Usu_model extends CI_Model{
   $consulta = $enuso->row();
   if(isset($consulta)){
     if($enuso->row()->id != $usuario){
-      echo "Correo ya en uso<br>";
     }
   }else{
     $this->db->query("update usuario set correo ='".$newCorreo."' where id='".$usuario."'");
-    echo "Correo cambiado correctamente<br>";
-
   }
   
   
@@ -103,12 +100,13 @@ class Usu_model extends CI_Model{
  }
 
  public function nom_usuario($id){
-    $consulta = $this->db->query('Select usuario,avatar from usuario WHERE id = '.$id.';');
+    $consulta = $this->db->query('Select usuario,avatar,fechaCreacion from usuario WHERE id = '.$id.';');
     $datos = $consulta->result();
     $categ =  array();
     foreach ($datos as $key) {
     array_push($categ, $key->usuario);
     array_push($categ, $key->avatar);
+    array_push($categ, $key->fechaCreacion);
     }
     return $categ;
  }

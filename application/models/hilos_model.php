@@ -31,7 +31,6 @@ public function get_hilosCat($cat){
 }
  //Metodo que inserta un articulo en la tabla
  public function add_hilo(){
- 	echo ($this->input->post('categ')+1);
  	$this->db->query("Insert into hilo values(null,".$this->session->userdata('id').",'".$this->input->post('titulo')."','".$this->input->post('texto')."',null,".($this->input->post('categ')+1).")");
  	return $this->db->insert_id();
  }

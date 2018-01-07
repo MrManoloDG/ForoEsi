@@ -10,9 +10,8 @@ class respuestas_model extends CI_Model{
  }
  //Metodo que inserta un articulo en la tabla
  public function add_respuestas(){ 
- $this->db->query('Insert into respuestas
-values(null,"'.$this->input->post('hilo').'","'.$this->input->post('usuario
-').'","'.$this->input->post('texto').'",null)');
+ $this->db->query('Insert into respuesta
+values(null,"'.$this->input->post('hilo').'","'.$this->session->userdata('id').'",\''.$this->input->post('texto').'\',null)');
  }
 
  public function num_mensajes($id){
