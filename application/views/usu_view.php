@@ -23,7 +23,7 @@
 					<div>
 						<table class="ta" width = " 80% " align = "center" border= 1 bordercolor="#8B846C" cellpadding="5" cellspacing="0">
 							<tr>
-								<td>
+								<td align="center">
 									<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="35" height="35"/>	
 								</td>
 								<td>

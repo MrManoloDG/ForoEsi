@@ -76,7 +76,7 @@ class Usu extends CI_Controller{
    
       $this->pagination->initialize($opciones);
       $datos = array('titulo_web' => 'ForoEsi','hilos' => $this->hilos_model->get_titulos($opciones['per_page'],$desde),
-        'categorias' => $this->categoria_model->get_categoria(),'paginacion' => $this->pagination->create_links());
+        'categorias' => $this->categoria_model->get_categoria(),'paginacion' => $this->pagination->create_links(),'borrar' => false);
       $this->load->view('hilos_view',$datos);
 	}
 	else 

@@ -69,6 +69,9 @@
 #estilo2{
 	background:#ebe8e5;
 }
+   	a{
+	color:#ed540c;
+}
 .hijo{
 		border-radius: 10px 10px 10px 10px;
         -moz-border-radius: 10px 10px 10px 10px;
@@ -78,7 +81,7 @@
 		background: #C0BDBA;
 		position: absolute;
 		/*nos posicionamos en el centro del navegador*/
-		top:50%;
+		top:60%;
 		left:47%;
 		/*determinamos una anchura*/
 		width:800px;

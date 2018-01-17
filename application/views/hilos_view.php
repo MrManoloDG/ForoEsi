@@ -105,11 +105,22 @@ img{
 					<td align="center" width="33%">
 						<?= $hilo->fecha; ?>
 					</td>
+					<?php if($borrar){?>
+					<td>
+						<a href="<?= base_url().'index.php/Hilos/borrar/'.$this->session->userdata('id').'/'.$hilo->id ?>" title="Borrar">Borrar</a>
+					</td>
+					<?php } ?>
 					</tr>
 			<?php	}
 			 ?>
 		</tr>
+		<tr><td BGCOLOR = "#ebe8e5"><br><p></p></td></tr>
+		<tr></tr>
+		<tr>
+			
+		</tr>
 		<tr BGCOLOR = "#C0BDBA">
+			<td BGCOLOR = "#ebe8e5"></td>
 			<td align="center">	<a href="<?= base_url().'index.php/hilos/nuevo' ?>" title="Crear Hilo">Nuevo hilo</a>
 
 		</tr>

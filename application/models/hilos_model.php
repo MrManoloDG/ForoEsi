@@ -34,6 +34,15 @@ public function get_hilosCat($cat){
  	$this->db->query("Insert into hilo values(null,".$this->session->userdata('id').",'".$this->input->post('titulo')."','".$this->input->post('texto')."',null,".($this->input->post('categ')+1).")");
  	return $this->db->insert_id();
  }
+ 
+ public function datoHilo($id){
+     $consulta = $this->db->query('Select * from hilo where id ='.$id.' ;');
+     return $consulta->row();
+ }
+
+ public function borrarHilo($id){
+ 	$this->db->query('Delete from hilo where id ='.$id.';');
+ }
 
  public function getNumHilos(){
  	return $this->db->count_all('hilo');

@@ -18,7 +18,7 @@ class Hilos extends CI_Controller{
  
     $this->pagination->initialize($opciones);
  	$datos = array('titulo_web' => 'ForoEsi','hilos' => $this->hilos_model->get_titulos($opciones['per_page'],$desde),
- 		'categorias' => $this->categoria_model->get_categoria(),'paginacion' => $this->pagination->create_links());
+ 		'categorias' => $this->categoria_model->get_categoria(),'paginacion' => $this->pagination->create_links(),'borrar' => false);
  	$this->load->view('hilos_view',$datos);
 
  }
@@ -32,14 +32,26 @@ class Hilos extends CI_Controller{
 
  	$param = $this->input->post('parametro');
  	$datos = array('titulo_web' => 'Busqueda de '.$param ,'hilos' => $this->hilos_model->get_busqueda($param),
- 		'categorias' => $this->categoria_model->get_categoria());
+ 		'categorias' => $this->categoria_model->get_categoria(),'borrar' => false);
  	$this->load->view('hilos_view',$datos);
  	}
  }
 
  public function hilosUsuario($id){
+ 	if($id == $this->session->userdata('id')){
  	$datos = array('titulo_web' => 'Hilos del usuario' ,'hilos' => $this->hilos_model->get_hilosUser($id),
- 		'categorias' => $this->categoria_model->get_categoria());
+ 		'categorias' => $this->categoria_model->get_categoria(),'borrar' => true);
+ 	}else{
+ 		$datos = array('titulo_web' => 'Hilos del usuario' ,'hilos' => $this->hilos_model->get_hilosUser($id),
+ 		'categorias' => $this->categoria_model->get_categoria(),'borrar' => false);
+ 	}
+ 	$this->load->view('hilos_view',$datos);
+ }
+
+ public function borrar($id,$hilo){
+ 	$this->hilos_model->borrarHilo($hilo);
+ 	$datos = array('titulo_web' => 'Hilos del usuario' ,'hilos' => $this->hilos_model->get_hilosUser($id),
+ 		'categorias' => $this->categoria_model->get_categoria(),'borrar' => true);
  	$this->load->view('hilos_view',$datos);
  }
  public function nuevo(){
@@ -62,7 +74,7 @@ class Hilos extends CI_Controller{
 			$this->nuevo();
 		}else{
 			$idhilo = $this->hilos_model->add_hilo();
-			$datos = array('titulo_web' => 'Respuestas','respuestas' => $this->respuestas_model->get_respuestas($idhilo),'categorias' => $this->categoria_model->get_categoria(),$this->hilos_model,'id' => $idhilo);
+			$datos = array('titulo_web' => 'Respuestas','respuestas' => $this->respuestas_model->get_respuestas($idhilo),'categorias' => $this->categoria_model->get_categoria(),$this->hilos_model,'id' => $idhilo,'alcachofa' => $this->hilos_model->datoHilo($idhilo));
  			$this->load->view('respuestas_view',$datos);
 		}
 	}

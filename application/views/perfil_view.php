@@ -23,7 +23,7 @@
 					<div>
 						<table class="ta" width = " 80% " align = "center" border= 1 bordercolor="#8B846C" cellpadding="5" cellspacing="0">
 							<tr>
-								<td>
+								<td align="center">
 									<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="35" height="35"/>	
 								</td>
 								<td>
@@ -84,9 +84,9 @@
 		/*indicamos que el margen izquierdo, es la mitad de la anchura*/
 		margin-left:-200px;
 		/*determinamos una altura*/
-		height:310px;
+		height:435px;
 		/*indicamos que el margen superior, es la mitad de la altura*/
-		margin-top:-150px;
+		margin-top:-217px;
 		border:1px solid #808080;
 		padding:5px;
 	}
@@ -109,7 +109,7 @@ img{
 	<table>
 	<tr><h2><?= $usuario->usuario ?></h2></tr>
 	<tr>
-	<img src="<?= base_url().'uploads/'.$usuario->avatar ?>" width="70" height="70" />
+	<img src="<?= base_url().'uploads/'.$usuario->avatar ?>" width="200" height="200" />
 	</tr>
 				<tr>
 					<td td align="center">

@@ -15,7 +15,8 @@ class Respuestas extends CI_Controller{
 
  public function vistaHilo($id){
  	$datos = array('titulo_web' => 'Respuestas',
-	'respuestas' => $this->respuestas_model->get_respuestas($id),'categorias' => $this->categoria_model->get_categoria(),'id'=> $id);
+	'respuestas' => $this->respuestas_model->get_respuestas($id),'categorias' => $this->categoria_model->get_categoria(),'id'=> $id,
+	'alcachofa' => $this->hilos_model->datoHilo($id));
  	$this->load->view('respuestas_view',$datos);
  }
  public function Guardar(){
@@ -30,7 +31,9 @@ class Respuestas extends CI_Controller{
 	 }else{
 	$this->respuestas_model->add_respuestas();
 	$idhilo = $this->input->post('hilo');
-	$data = array('titulo_web' => 'Respuestas','respuestas' => $this->respuestas_model->get_respuestas($idhilo),'categorias' => $this->categoria_model->get_categoria(), 'id'=> $this->input->post('hilo'));
+	$data = array('titulo_web' => 'Respuestas','respuestas' => $this->respuestas_model->get_respuestas($idhilo),
+		'categorias' => $this->categoria_model->get_categoria(),
+		 'id'=> $this->input->post('hilo'),'alcachofa' => $this->hilos_model->datoHilo($idhilo));
  	$this->load->view('respuestas_view',$data);
  	}
  	}

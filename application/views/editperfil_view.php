@@ -23,8 +23,8 @@
 					<div>
 						<table class="ta" width = " 80% " align = "center" border= 1 bordercolor="#8B846C" cellpadding="5" cellspacing="0">
 							<tr>
-								<td>
-									<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="35" height="35"/>	
+								<td align="center">
+									<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="50" height="50"/>	
 								</td>
 								<td>
 									<div><a href="<?= base_url().'index.php/Usu/vistaPerfil/'.$this->session->userdata('id') ?>" title="Ver perfil"><?= $this->session->userdata('username')?></a></div>
@@ -84,9 +84,9 @@
 		/*indicamos que el margen izquierdo, es la mitad de la anchura*/
 		margin-left:-200px;
 		/*determinamos una altura*/
-		height:290px;
+		height:320px;
 		/*indicamos que el margen superior, es la mitad de la altura*/
-		margin-top:-150px;
+		margin-top:-165px;
 		border:1px solid #808080;
 		padding:5px;
 	}
@@ -114,7 +114,7 @@
 		</tr>
 		<tr>
 			<td>
-				<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="50" height="50"/>
+				<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="100" height="100"/>
 			</td>
 			<td>
 				<?php echo "<input type='file' name='userfile' size='20' />"; ?>

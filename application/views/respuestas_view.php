@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div>
 						<table class="ta" width = " 80% " align = "center" border= 1 bordercolor="#8B846C" cellpadding="5" cellspacing="0">
 							<tr>
-								<td>
+								<td align = "center">
 									<img src="<?= base_url().'uploads/'.$this->session->userdata('avatar') ?>" width="35" height="35"/>	
 								</td>
 								<td>
@@ -75,11 +75,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 img{
 	border-radius: 5px;
 }
+   	a{
+	color:#ed540c;
+}
 </style>
 <body id="estilo2">
+	 <div align="center">
+	<table width = " 80% " align = "center"  cellpadding="5" cellspacing="0">
+		<tbody>
+			<tr  class="ArribaResp" BGCOLOR= "#fbfaf9">
+				<td width="175" style="border-right:0px; font-size: 11px"><?= $alcachofa->fecha; ?>
+					
+				</td>
+
+				<td align = "right" style="border-left: 0px; font-size: 11px">1
+					
+				</td>
+			</tr>
+			<tr valing ="top">
+			    <td width="175" BGCOLOR = "#7C7E7C" style="border-top:0px;" >
+			    	<div><?php $dusu = $this->Usu_model->nom_usuario($alcachofa->creador);?>
+						<a href="<?= base_url().'index.php/Usu/vistaPerfil/'.$alcachofa->creador ?>" title="Ver perfil"><?= $dusu[0]?></a>
+					</div><br>
+			    	<div>
+			    		<?php 
+							$dusu = $this->Usu_model->nom_usuario($alcachofa->creador); 
+						?>
+						<img src="<?= base_url().'uploads/'.$dusu[1] ?>" width="100" height="100"/>
+			    	</div><br>
+			    	<div><?php 
+							$dusu = $this->Usu_model->nom_usuario($alcachofa->creador); 
+						?>
+						<?= $dusu[2]?>
+			    	</div>	
+				</td>
+				
+				<td BGCOLOR = "#C0BDBA" align = "left" style="border-bottom:0px;">
+					<div style="font-weight: bold;"><h1><?= $alcachofa->titulo; ?></h1></div>
+					<div>-----------------------------------------------------------------------------------------------------------------------------------------</div>
+					<div><?= $alcachofa->texto; ?></div>
+				</td>
+				<tr>
+					<td></td><td></td>
+				</tr>
+				
+			</tr>
+		</tbody>
+	</table>
+</div>
 <?php
 
-$i=0;
+$i=1;
 foreach ($respuestas as $fila){ 
 $i++;
 	?>
@@ -100,12 +146,12 @@ $i++;
 			    	<div><?php $dusu = $this->Usu_model->nom_usuario($fila->usuario);?>
 						<a href="<?= base_url().'index.php/Usu/vistaPerfil/'.$fila->usuario ?>" title="Ver perfil"><?= $dusu[0]?></a>
 					</div>
-			    	<div>
+			    	<div><br>
 			    		<?php 
 							$dusu = $this->Usu_model->nom_usuario($fila->usuario); 
 						?>
-						<img src="<?= base_url().'uploads/'.$dusu[1] ?>" width="60" height="60"/>
-			    	</div>
+						<img src="<?= base_url().'uploads/'.$dusu[1] ?>" width="100" height="100"/>
+			    	</div><br>
 			    	<div><?php 
 							$dusu = $this->Usu_model->nom_usuario($fila->usuario); 
 						?>

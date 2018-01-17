@@ -1,7 +1,7 @@
 <html lang="es">
 <head>
  <meta charset="utf-8">
- <title>pruebas varias</title>
+ <title>ForoEsi</title>
  <LINK REL=StyleSheet HREF="<?= base_url().'estilo.css'?>" TYPE="text/css" MEDIA=screen>
 </head>
 <style type="text/css">
